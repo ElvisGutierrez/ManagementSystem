@@ -19,7 +19,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-[#111827] text-white px-8 py-10">
       <h1 className="text-3xl font-bold mb-8">
-        👋 Bienvenido{user?.name ? `, ${user.name}` : ""}
+        Bienvenido{user?.name ? `, ${user.name}` : ""}
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">

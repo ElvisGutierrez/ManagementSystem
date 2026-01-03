@@ -18,7 +18,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  /* const [success, setSuccess] = useState(false); */
   const [errorMessage, setErrorMessage] = useState("");
 
   const {
@@ -51,9 +51,9 @@ const LoginForm = () => {
       localStorage.setItem("token", res.data.token);
 
       await sleep(1500);
-      setSuccess(true);
+      /* setSuccess(true); */
 
-      setLoading(false);
+      /* setLoading(false); */
       await sleep(1500);
 
       navigate("/dashboard");
@@ -69,11 +69,11 @@ const LoginForm = () => {
       className="flex flex-col space-y-4 w-full items-center bg-[#2b2738]"
     >
       {/* ALERTA */}
-      {success && (
+      {/* {success && (
         <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
           Datos correctos
         </div>
-      )}
+      )} */}
 
       {errorMessage && (
         <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50">
