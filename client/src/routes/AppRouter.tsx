@@ -5,6 +5,8 @@ import PrivateRoute from "./PrivateRoutes";
 import Dashboard from "../pages/Dashboard";
 import CreateAppointment from "../pages/CreateAppointment";
 import MyAppointments from "../pages/MyAppointments";
+import AdminDashboard from "../admin/AdminDashboard";
+import AdminRoute from "./AdminRoutes";
 
 const AppRouter = () => {
   return (
@@ -37,6 +39,14 @@ const AppRouter = () => {
             <PrivateRoute>
               <MyAppointments />
             </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
           }
         />
         ;

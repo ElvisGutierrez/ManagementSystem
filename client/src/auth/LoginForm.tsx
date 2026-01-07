@@ -56,7 +56,11 @@ const LoginForm = () => {
       /* setLoading(false); */
       await sleep(1500);
 
-      navigate("/dashboard");
+      if (res.data.user.role === "ADMIN") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } catch {
       setLoading(false);
       setErrorMessage("Email o contraseña incorrectos");

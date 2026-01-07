@@ -11,3 +11,7 @@ export const createAppointmentRequest = (data: {
 export const getMyAppointmentsRequest = () => {
   return api.get("/appointments/my");
 };
+
+export const cancelAppointmentRequest = (id: string) => {
+  return api.delete(`/appointments/${id}`);
+};

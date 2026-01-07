@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./infrastructure/database/mongo";
 
-import routes from "./interfaces/routes/";
+import routes from "./interfaces/routes";
 
 dotenv.config();
 connectDB();

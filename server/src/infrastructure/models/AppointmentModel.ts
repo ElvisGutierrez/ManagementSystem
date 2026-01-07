@@ -6,6 +6,11 @@ const appointmentSchema = new Schema(
     date: { type: String, required: true },
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
+    status: {
+      type: String,
+      enum: ["RESERVED", "CANCELLED"],
+      default: "RESERVED",
+    },
   },
   { timestamps: true }
 );

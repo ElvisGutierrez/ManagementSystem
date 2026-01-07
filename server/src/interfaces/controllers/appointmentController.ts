@@ -35,3 +35,35 @@ export const getAllAppointments = async (_req: Request, res: Response) => {
   const appointments = await Appointment.find().populate("user", "name email");
   res.json(appointments);
 };
+
+export const cancelAppointment = async (req: Request, res: Response) => {
+  const appointment = await Appointment.findById(req.params.id);
+
+  if (!appointment) {
+    return res.status(404).json({ message: "Cita no encontrada" });
+  }
+
+  if (appointment.user.toString() !== req.user!.id) {
+    return res.status(403).json({ message: "No autorizado" });
+  }
+
+  await appointment.deleteOne();
+
+  res.json({ message: "Cita cancelada correctamente" });
+};
+
+export const adminCancelAppointment = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const appointment = await Appointment.findById(id);
+  if (!appointment) {
+    return res.status(404).json({ message: "Cita no encontrada" });
+  }
+
+  appointment.status = "CANCELLED";
+  await appointment.save();
+
+  res.json({
+    message: "Cita cancelada por el administrador",
+  });
+};

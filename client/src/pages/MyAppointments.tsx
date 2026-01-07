@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getMyAppointmentsRequest } from "../api/appointments";
+import {
+  getMyAppointmentsRequest,
+  cancelAppointmentRequest,
+} from "../api/appointments";
 
 interface Appointment {
   _id: string;
@@ -11,19 +14,32 @@ interface Appointment {
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [cancelingId, setCancelingId] = useState<string | null>(null);
+
+  const fetchAppointments = async () => {
+    try {
+      const res = await getMyAppointmentsRequest();
+      setAppointments(res.data);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const res = await getMyAppointmentsRequest();
-        setAppointments(res.data);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchAppointments();
   }, []);
+
+  const handleCancel = async (id: string) => {
+    if (!confirm("¿Seguro que deseas cancelar esta cita?")) return;
+
+    try {
+      setCancelingId(id);
+      await cancelAppointmentRequest(id);
+      await fetchAppointments();
+    } finally {
+      setCancelingId(null);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#2b2738] px-6 py-10">
@@ -62,12 +78,23 @@ const MyAppointments = () => {
                   </p>
                 </div>
 
-                <span
-                  className="mt-3 sm:mt-0 inline-block px-4 py-1 text-sm
-                  rounded-full bg-[#6e54b5] text-white"
-                >
-                  Reservada
-                </span>
+                <div className="flex items-center gap-3 mt-4 sm:mt-0">
+                  <span
+                    className="inline-block px-4 py-1 text-sm rounded-full
+                    bg-[#6e54b5] text-white"
+                  >
+                    Reservada
+                  </span>
+
+                  <button
+                    onClick={() => handleCancel(a._id)}
+                    disabled={cancelingId === a._id}
+                    className="px-4 py-1 text-sm rounded-full
+                    bg-red-600 hover:bg-red-700 transition disabled:opacity-50"
+                  >
+                    {cancelingId === a._id ? "Cancelando..." : "Cancelar"}
+                  </button>
+                </div>
               </li>
             ))}
           </ul>

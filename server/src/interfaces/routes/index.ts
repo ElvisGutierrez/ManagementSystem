@@ -3,6 +3,7 @@ import authRoutes from "./authRoutes";
 import appointmentRoutes from "./appointmentRoutes";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { adminOnly } from "../middlewares/roleMiddleware";
+import adminRoutes from "./adminRoutes";
 
 import protectedRoutes from "./protectedRoutes";
 
@@ -19,5 +20,6 @@ const router = Router();
 
 router.use("/auth", authRoutes);
 router.use("/appointments", appointmentRoutes);
+router.use("/admin", adminRoutes);
 
 export default router;
